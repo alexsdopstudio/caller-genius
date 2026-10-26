@@ -1,0 +1,122 @@
+[
+  {
+    "tool_config": {
+      "type": "webhook",
+      "name": "send_whatsapp_simulation",
+      "description": "Richiede una sola volta il WhatsApp dimostrativo per il prospect consenziente.",
+      "response_timeout_secs": 30,
+      "api_schema": {
+        "url": "https://YOUR_PUBLIC_HOST/api/tools/send-whatsapp-simulation",
+        "method": "POST",
+        "content_type": "application/json",
+        "request_headers": {
+          "X-Tool-Key": {
+            "secret_id": "YOUR_ELEVENLABS_SECRET_ID"
+          }
+        },
+        "request_body_schema": {
+          "type": "object",
+          "description": "Richiede una sola volta il WhatsApp dimostrativo per il prospect consenziente.",
+          "properties": {
+            "prospect_id": {
+              "type": "string",
+              "description": "Identificativo del prospect dal contesto della conversazione.",
+              "dynamic_variable": "prospect_id"
+            }
+          },
+          "required": [
+            "prospect_id"
+          ]
+        }
+      },
+      "dynamic_variables": {
+        "dynamic_variable_placeholders": {
+          "prospect_id": "example-prospect-id"
+        }
+      }
+    }
+  },
+  {
+    "tool_config": {
+      "type": "webhook",
+      "name": "check_calendar",
+      "description": "Restituisce due slot reali e una descrizione parlabile. Usare prima di proporre orari.",
+      "response_timeout_secs": 30,
+      "api_schema": {
+        "url": "https://YOUR_PUBLIC_HOST/api/tools/check-calendar",
+        "method": "POST",
+        "content_type": "application/json",
+        "request_headers": {
+          "X-Tool-Key": {
+            "secret_id": "YOUR_ELEVENLABS_SECRET_ID"
+          }
+        },
+        "request_body_schema": {
+          "type": "object",
+          "description": "Restituisce due slot reali e una descrizione parlabile. Usare prima di proporre orari.",
+          "properties": {},
+          "required": []
+        }
+      },
+      "dynamic_variables": {
+        "dynamic_variable_placeholders": {
+          "prospect_id": "example-prospect-id"
+        }
+      }
+    }
+  },
+  {
+    "tool_config": {
+      "type": "webhook",
+      "name": "book_sales_meeting",
+      "description": "Prenota solo lo slot scelto e confermato esplicitamente dal titolare.",
+      "response_timeout_secs": 30,
+      "api_schema": {
+        "url": "https://YOUR_PUBLIC_HOST/api/tools/book-sales-meeting",
+        "method": "POST",
+        "content_type": "application/json",
+        "request_headers": {
+          "X-Tool-Key": {
+            "secret_id": "YOUR_ELEVENLABS_SECRET_ID"
+          }
+        },
+        "request_body_schema": {
+          "type": "object",
+          "description": "Prenota solo lo slot scelto e confermato esplicitamente dal titolare.",
+          "properties": {
+            "prospect_id": {
+              "type": "string",
+              "description": "Identificativo del prospect dal contesto della conversazione.",
+              "dynamic_variable": "prospect_id"
+            },
+            "preferred_slot": {
+              "type": "string",
+              "description": "Esatto timestamp ISO 8601 con offset restituito da check_calendar e confermato dal cliente."
+            },
+            "owner_name": {
+              "type": "string",
+              "description": "Nome titolare, facoltativo."
+            },
+            "company_name": {
+              "type": "string",
+              "description": "Azienda, facoltativa."
+            },
+            "prospect_email": {
+              "type": "string",
+              "description": "Email valida facoltativa. Omettere se non fornita."
+            }
+          },
+          "required": [
+            "prospect_id",
+            "preferred_slot"
+          ]
+        }
+      },
+      "dynamic_variables": {
+        "dynamic_variable_placeholders": {
+          "prospect_id": "example-prospect-id"
+        }
+      }
+    }
+  }
+]
